@@ -1,9 +1,8 @@
-ToDoList = []
-
 def add_task():
     try:
         new_task = str(input("Please enter the new task: "))
-        ToDoList.append(new_task)
+        task_status = "Incomplete"
+        ToDoList.append(new_task + ": " + task_status)
         print(f"'{new_task}' has been added to the To-Do List.")
     except TypeError:
         print("Invalid input. Please try again")
@@ -15,7 +14,16 @@ def view_tasks():
         print(f"To-Do List: \n{ToDoList}")
 
 def mark_task_complete():
-    pass
+    task_to_complete = input("Which task has been completed? ")
+    for task in ToDoList:
+        if task_to_complete in task:
+            task_completed = task.replace("Incomplete", "Completed")
+            index = ToDoList.index(task)
+            ToDoList[index] = task_completed
+            print(f"Task '{task_to_complete}' has been completed.")
+        else:
+            print(f"Task '{task_to_complete}' not found in list.")
+
 
 def delete_task():
     try:
@@ -26,8 +34,10 @@ def delete_task():
         print("Task not found. Please try again.")
 
 
-def main():
-    while True:
+ToDoList = []
+
+while True:
+    try:
         print("\nWelcome to the To-Do List App!", "\nMenu:")
         print("1. Add a task")
         print("2. View tasks")
@@ -36,26 +46,20 @@ def main():
         print("5. Quit")
         choice = input("Select an option: (1-5) ")
 
-        try:
-            if choice == "1":
-                add_task()
-                
-            
-            elif choice == "2":
-                view_tasks()
-                pass
-            elif choice == "3":
-                pass
-            elif choice == "4":
-                delete_task()
-                pass
-            elif choice == "5":
-                print("Thank you for using the To-Do List App!")
-                break
-            else:
-                print("Invalid input. Please try again.")     
-        except ValueError:
-            print("Invalid number. Please choose agian.")
+        if choice == "1":
+            add_task()
+        elif choice == "2":
+            view_tasks()
+        elif choice == "3":
+            mark_task_complete()
+        elif choice == "4":
+            delete_task()
+        elif choice == "5":
+            print("Thank you for using the To-Do List App!")
+            break
+        else:
+            print("Invalid input. Please try again.")     
+    except ValueError:
+        print("Invalid number. Please choose agian.")
 
 
-main()
